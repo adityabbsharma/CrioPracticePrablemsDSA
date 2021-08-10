@@ -18,7 +18,10 @@ public class TwoSum {
 //        return twoS;
         int[] twoS = new int[2];
         HashMap<Integer,Integer> hMap = new HashMap<>();
+        HashMap<Integer,Integer> hMap2 = new HashMap<>();
         for(int i=0;i<nums.length;i++){
+            if(hMap.containsKey(nums[i]))
+                hMap2.put(nums[i],i);
             if(!hMap.containsKey(nums[i]))
                 hMap.put(nums[i],i);
         }
@@ -31,13 +34,26 @@ public class TwoSum {
             if((nums[lPointer]+nums[rPointer])<target)
                 lPointer++;
             if((nums[lPointer]+nums[rPointer])==target){
-                resFirstIndex = hMap.get(nums[lPointer]);
-                resSecondIndex = hMap.get(nums[rPointer]);
-                break;
+                if(nums[lPointer]==nums[rPointer]){
+                    resFirstIndex = hMap.get(nums[lPointer]);
+                    resSecondIndex = hMap2.get(nums[rPointer]);
+                    break;
+                }
+                else{
+                    resFirstIndex = hMap.get(nums[lPointer]);
+                    resSecondIndex = hMap.get(nums[rPointer]);
+                    break;
+                }
             }
         }
-        twoS[0] = resFirstIndex;
-        twoS[1] = resSecondIndex;
+        if(resFirstIndex<resSecondIndex){
+            twoS[0] = resFirstIndex;
+            twoS[1] = resSecondIndex;
+        }
+        else{
+            twoS[0] = resSecondIndex;
+            twoS[1] = resFirstIndex;
+        }
         return twoS;
     }
 
