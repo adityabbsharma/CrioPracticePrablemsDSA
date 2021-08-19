@@ -56,6 +56,7 @@ class LargestSubarraySumZero {
         ArrayList<Integer> arrayList = new ArrayList<>();
         HashMap<Integer,Integer> hMap = new HashMap<>();
         int[] prefixSum = new int[n];
+        int allElementsZeroCheck=0;
         for(int i=0;i<n;i++){
             if(arr[i]==0){
                 hMap.put(i,1);
@@ -67,38 +68,69 @@ class LargestSubarraySumZero {
                 //System.out.println("prefixSum[i]="+prefixSum[i]+" at i="+i);
             }
             if(prefixSum[i]==0){
-                hMap.put(0,i+1);
+                if(hMap.containsKey(0) && hMap.get(0)<(i+1)){
+                    hMap.put(0,i+1);
+                }
+                else if(!hMap.containsKey(0)){
+                    hMap.put(0,i+1);
+                }
+
+            }
+            if(arr[i]!=0)
+                allElementsZeroCheck =1;
+        }
+        if(hMap.containsKey(0)){
+            if(hMap.get(0)==n){
+                for(int i=0;i<n;i++){
+                    arrayList.add(arr[i]);
+                }
+                return arrayList;
             }
         }
-        for(int i=1;i<n;i++){
-            for(int j=0;j<n-1-i;j++){
-                int sum = prefixSum[n-1-j] - prefixSum[i-1] ;
-                //System.out.println("sum="+sum);
-                if(sum==0){
-                    if(hMap.containsKey(i) && hMap.get(i)>(n-i-j)){
-                        continue;
+
+
+        if(allElementsZeroCheck==1){
+            for(int i=1;i<n;i++){
+                for(int j=0;j<n-1-i;j++){
+                    int sum = prefixSum[n-1-j] - prefixSum[i-1] ;
+                    //System.out.println("sum="+sum);
+                    if(sum==0){
+                        if(hMap.containsKey(i) && hMap.get(i)>(n-i-j)){
+                            continue;
+                        }
+                        hMap.put(i,n-i-j);
                     }
-                    hMap.put(i,n-i-j);
                 }
             }
-        }
-        //System.out.println(hMap);
-        int maxLength=0;
-        for(Integer key: hMap.keySet()){
-            if(maxLength<hMap.get(key))
-                maxLength = hMap.get(key);
-        }
-        int minIndex=-1;
-        for(Integer key: hMap.keySet()){
-            if(hMap.get(key)==maxLength){
-                if(minIndex<key){
-                    minIndex = key;
+            //System.out.println(hMap);
+            int maxLength=0;
+            for(Integer key: hMap.keySet()){
+                if(maxLength<hMap.get(key))
+                    maxLength = hMap.get(key);
+            }
+            int minIndex=-1;
+            for(Integer key: hMap.keySet()){
+                if(hMap.get(key)==maxLength){
+                    if(minIndex<key){
+                        minIndex = key;
+                    }
                 }
             }
+            for(int i=minIndex;i<minIndex+maxLength;i++){
+                arrayList.add(arr[i]);
+            }
+            if(arrayList.size()==0){
+                arrayList.add(-1);
+                return arrayList;
+            }
+            return arrayList;
         }
-        for(int i=minIndex;i<minIndex+maxLength;i++){
-            arrayList.add(arr[i]);
+        else{
+            for(int i=0;i<n;i++){
+                arrayList.add(arr[i]);
+            }
+            return arrayList;
         }
-        return arrayList;
+
     }
 }
