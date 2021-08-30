@@ -75,6 +75,17 @@ public class Solution {
 
     public int[] findFirstAndLastPositionOfElementInSortedArray(int[] nums, int target) {
         int[] answer = new int[2];
+        if(nums[0]==nums[nums.length-1] && nums[0]==target){
+            answer[0] = 0;
+            answer[1] = nums.length-1;
+            return answer;
+        }
+        if(nums[0]==nums[nums.length-1] && nums[0]!=target){
+            answer[0] = -1;
+            answer[1] = -1;
+            return answer;
+        }
+
         int midValue = binarySearch(nums,target);
 //        System.out.println("i m here 2");
         if(midValue==-1){
