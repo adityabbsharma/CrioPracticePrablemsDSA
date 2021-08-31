@@ -88,8 +88,8 @@ class CgpaSum {
     }
 
     static long cgpaSum(int n, ArrayList<Integer> subjects, ArrayList<ArrayList<Integer>> students) {
-        HashMap<Integer,Integer> hashMap = new HashMap<>();
-       // ArrayList<Integer> cgpaList = new ArrayList<>();
+//        HashMap<Integer,Integer> hashMap = new HashMap<>();
+        ArrayList<Integer> cgpaList = new ArrayList<>();
         int sumOfCreditPoints= 0;
         for(int i=0;i<subjects.size();i++){
             sumOfCreditPoints += subjects.get(i);
@@ -100,16 +100,16 @@ class CgpaSum {
                     students.get(i).get(3)*subjects.get(2)+students.get(i).get(4)*subjects.get(3)+
                     students.get(i).get(5)*subjects.get(4);
             int cgpa = (sumOfGradePoints/sumOfCreditPoints);
-            if(!hashMap.containsKey(cgpa))
-                hashMap.put(cgpa,1);
-            else{
-                int freq = hashMap.get(cgpa);
-                hashMap.put(cgpa,freq+1);
-            }
-            //cgpaList.add((sumOfGradePoints/sumOfCreditPoints));
+//            if(!hashMap.containsKey(cgpa))
+//                hashMap.put(cgpa,1);
+//            else{
+//                int freq = hashMap.get(cgpa);
+//                hashMap.put(cgpa,freq+1);
+//            }
+            cgpaList.add((sumOfGradePoints/sumOfCreditPoints));
             //System.out.println(cgpaList.get(i));
         }
-        System.out.println(hashMap);
+//        System.out.println(hashMap);
         long pairOfSum=0;
 //        for(Integer key: hashMap.keySet()){
 //            int cgpa = hashMap.get(key);
@@ -118,22 +118,22 @@ class CgpaSum {
 //        }
 //        if(pairOfSum%2 == 1)
 //            return pairOfSum/2 + 1;
-//        for(int i=0;i<n;i++){
-//            for(int j=0;j<n;j++){
-//                if(i!=j && (cgpaList.get(i)+cgpaList.get(j) == 10)){
-//                    pairOfSum++;
-//                    //break;
-//                }
-//            }
-//        }
-        for(Integer key:hashMap.keySet()){
-            if(hashMap.containsKey(10-key)){
-                //int freq = hashMap.get(10-key);
-                pairOfSum += (hashMap.get(key) * hashMap.get(10-key));
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(i!=j && (cgpaList.get(i)+cgpaList.get(j) == 10)){
+                    pairOfSum++;
+                    //break;
+                }
             }
         }
-        //if(pairOfSum%2 == 1)
-          //  return pairOfSum/2 + 1;
+//        for(Integer key:hashMap.keySet()){
+//            if(hashMap.containsKey(10-key)){
+//                //int freq = hashMap.get(10-key);
+//                pairOfSum += (hashMap.get(key) * hashMap.get(10-key));
+//            }
+//        }
+        if(pairOfSum%2 == 1)
+            return pairOfSum/2 + 1;
         return pairOfSum/2;
     }
 }
